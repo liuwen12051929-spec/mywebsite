@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绿渊潭 - 长白山文旅</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: #2d3748;
+            background-color: #f8fafc;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../../web/web.html" class="text-2xl font-bold text-blue-800">
+                    <i class="fas fa-mountain mr-2"></i>长白山文旅
+                </a>
+                <a href="../../web/web.html#attractions" class="text-blue-600 hover:text-blue-800">
+                    <i class="fas fa-arrow-left mr-2"></i>返回景点列表
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <div class="container mx-auto px-4 py-12 max-w-5xl">
+        <!-- 标题 -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-blue-800">绿渊潭</h1>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p class="text-xl text-gray-600">瀑布冲击形成的深潭，夏季清澈见底，冬季冰瀑冰潭</p>
+        </div>
+
+        <!-- 主图 -->
+        <div class="mb-12 rounded-xl overflow-hidden shadow-lg">
+            <img src="绿渊潭.jpeg" alt="绿渊潭" class="w-full h-[500px] object-cover">
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="glassmorphism p-8 md:p-12 mb-8">
+            <div class="prose prose-lg max-w-none">
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    绿渊潭，是瀑布冲击形成的深潭，夏季清澈见底，冬季冰瀑冰潭。潭水碧绿，周围植被茂密，景色宜人。这里是长白山北坡景区的一处静谧之地，以其独特的色彩和宁静的氛围吸引着无数游客。
+                </p>
+
+                <h2 class="text-2xl font-bold text-blue-800 mt-8 mb-4">🌊 景观特色</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    绿渊潭的潭水呈现出独特的碧绿色，这种颜色源于水中的矿物质和周围植被的倒影。夏季时，潭水清澈透明，可以清晰地看到水底的岩石和游鱼。冬季时，瀑布结冰形成冰瀑，潭面也会结冰，呈现出别样的冰雪奇观。
+                </p>
+
+                <h2 class="text-2xl font-bold text-blue-800 mt-8 mb-4">🌲 生态环境</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    绿渊潭周围植被茂密，生长着各种高山植物。这里负氧离子含量高，空气清新，是天然的氧吧。潭边的栈道蜿蜒曲折，为游客提供了观赏的最佳视角。
+                </p>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg mt-8">
+                    <h3 class="text-xl font-semibold text-yellow-800 mb-3">✨ 游览提示</h3>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li><strong>所在位置：</strong>位于长白山北坡景区，是北坡经典线路的重要景点。</li>
+                        <li><strong>最佳时节：</strong>夏季（6-9月）可观赏清澈的潭水和茂密的植被；冬季可欣赏冰瀑和冰潭的奇观。</li>
+                        <li><strong>游览方式：</strong>沿栈道步行即可到达，路程相对轻松，适合各年龄段游客。</li>
+                        <li><strong>注意事项：</strong>请沿指定栈道游览，注意安全，不要靠近潭边湿滑区域。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 图片展示 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="rounded-xl overflow-hidden shadow-lg">
+                <img src="绿渊潭2.jpg" alt="绿渊潭" class="w-full h-64 object-cover">
+            </div>
+        </div>
+
+        <!-- 返回按钮 -->
+        <div class="text-center">
+            <a href="../../web/web.html#attractions" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors duration-300">
+                <i class="fas fa-arrow-left mr-2"></i>返回景点列表
+            </a>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 长白山文旅. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

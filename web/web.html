@@ -1,0 +1,3013 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>长白山文旅 - 探索关东第一山的自然与文化之美</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: #2d3748;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .bg-mountain {
+            background-image: url('quanjingzhao.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .bg-mountain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+            z-index: 1;
+        }
+
+        .bg-mountain>* {
+            position: relative;
+            z-index: 2;
+        }
+
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(31, 38, 135, 0.15);
+        }
+
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .highlight-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(59, 130, 246, 0.2);
+            z-index: -1;
+        }
+
+        .season-card {
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .season-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .staggered-entry {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* 移动端导航菜单样式 */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 99;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 确保图片不超过容器 */
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .img-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 轮播图样式 */
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-indicator.active {
+            background-color: white;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-control:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-control.prev {
+            left: 20px;
+        }
+
+        .carousel-control.next {
+            right: 20px;
+        }
+
+        /* 选项卡样式 */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            color: #3b82f6;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #3b82f6;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 评分样式 */
+        .rating {
+            display: flex;
+            align-items: center;
+        }
+
+        .rating-stars {
+            display: flex;
+            color: #fbbf24;
+            margin-right: 8px;
+        }
+
+        .rating-text {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        /* 收藏按钮样式 */
+        .favorite-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            color: #d1d5db;
+        }
+
+        .favorite-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        .favorite-btn.active {
+            color: #ef4444;
+        }
+
+        /* 日历样式 */
+        .calendar {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .calendar-nav {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .calendar-nav:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #e5e7eb;
+        }
+
+        .calendar-day {
+            padding: 12px;
+            background-color: white;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background-color: #f3f4f6;
+        }
+
+        .calendar-day.today {
+            background-color: #dbeafe;
+            font-weight: 600;
+        }
+
+        .calendar-day.event {
+            position: relative;
+        }
+
+        .calendar-day.event::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: #3b82f6;
+            border-radius: 50%;
+        }
+
+        .calendar-day.other-month {
+            color: #9ca3af;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #2563eb;
+            transform: translateY(-5px);
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-submit {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background-color: #2563eb;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* 优化导航栏滚动效果 */
+        .nav-scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        /* AI助手样式 */
+        .ai-chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .ai-chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .ai-chat-window.hidden {
+            display: none;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .chat-iframe {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .ai-chat-window {
+                width: calc(100% - 40px);
+                height: 500px;
+                right: 20px;
+                bottom: 80px;
+            }
+
+            .ai-chat-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- AI助手浮动按钮 -->
+    <button id="ai-chat-btn" class="ai-chat-button">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <div id="ai-chat-window" class="ai-chat-window hidden">
+        <div class="chat-header">
+            <h3>Agent小满</h3>
+            <button id="close-chat" class="close-btn">&times;</button>
+        </div>
+        <iframe src="https://mbd.baidu.com/ma/s/L1cuk4wi" class="chat-iframe" title="AI助手聊天窗口">
+        </iframe>
+    </div>
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300"
+        id="mainNav">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center">
+                <i class="fas fa-mountain text-blue-600 text-2xl mr-2"></i>
+                <span class="text-xl font-bold text-blue-800">长白山文旅</span>
+            </div>
+
+            <!-- 桌面端导航 -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="nav-link text-gray-600 hover:text-blue-600 font-medium">景区概况</a>
+                <a href="#attractions" class="nav-link text-gray-600 hover:text-blue-600 font-medium">主要景点</a>
+                <a href="#seasons" class="nav-link text-gray-600 hover:text-blue-600 font-medium">四季特色</a>
+                <a href="#food" class="nav-link text-gray-600 hover:text-blue-600 font-medium">美食推荐</a>
+                <a href="#accommodation" class="nav-link text-gray-600 hover:text-blue-600 font-medium">住宿推荐</a>
+                <a href="#transportation" class="nav-link text-gray-600 hover:text-blue-600 font-medium">交通指南</a>
+                <a href="#activities" class="nav-link text-gray-600 hover:text-blue-600 font-medium">文化活动</a>
+                <a href="#tips" class="nav-link text-gray-600 hover:text-blue-600 font-medium">旅游注意事项</a>
+            </div>
+
+            <!-- 移动端菜单按钮 -->
+            <button class="md:hidden text-gray-600 focus:outline-none" id="mobileMenuButton" aria-label="导航菜单">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="p-4 flex justify-end">
+            <button class="text-gray-600 focus:outline-none" id="closeMenuButton" aria-label="关闭菜单">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <div class="px-4 py-2">
+            <a href="#overview"
+                class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg">景区概况</a>
+            <a href="#attractions"
+                class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg">主要景点</a>
+            <a href="#seasons"
+                class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg">四季特色</a>
+            <a href="#food"
+                class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg">美食推荐</a>
+            <a href="#accommodation"
+                class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg">住宿推荐</a>
+            <a href="#transportation"
+                class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg">交通指南</a>
+            <a href="#activities"
+                class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg">文化活动</a>
+            <a href="#tips"
+                class="block py-3 px-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg">旅游注意事项</a>
+        </div>
+    </div>
+
+    <!-- 菜单遮罩 -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- 头部横幅 -->
+    <header class="bg-mountain h-screen flex items-center justify-center">
+        <div class="text-center px-4">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 text-shadow">长白山</h1>
+            <p class="text-xl md:text-2xl text-white/90 mb-8 text-shadow">关东第一山 · 世界自然遗产 · 5A级旅游景区</p>
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <span
+                    class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm">松花江、图们江、鸭绿江发源地</span>
+                <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm">森林覆盖率87%</span>
+                <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm">四季风光迥异</span>
+            </div>
+            <a href="#overview"
+                class="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-full transition-colors duration-300">
+                开始探索
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-white scroll-indicator">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </div>
+    </header>
+
+    <!-- 景区概况 -->
+    <section id="overview" class="container mx-auto py-20 px-4">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-800">景区概况</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto">长白山以"雄、奇、险、秀、幽、奥"著称，是中华十大名山之一，拥有丰富的自然景观和文化底蕴。</p>
+            </div>
+
+            <div class="glassmorphism p-8 md:p-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <p class="mb-4 text-gray-700">
+                            长白山景区位于吉林省延边朝鲜族自治州安图县和白山市抚松县境内，是国家5A级旅游景区，中华十大名山之一，有"关东第一山"之称。景区总面积<span
+                                class="highlight-text">1964平方公里</span>，核心景区面积约<span
+                                class="highlight-text">758平方公里</span>，森林覆盖率达<span
+                                class="highlight-text">87%</span>，属温带大陆性山地气候，四季风光迥异。</p>
+
+                        <p class="mb-6 text-gray-700">
+                            作为松花江、图们江、鸭绿江的发源地，长白山以"雄、奇、险、秀、幽、奥"著称，2010年被联合国教科文组织列入"<span
+                                class="highlight-text">世界自然遗产名录</span>"。</p>
+
+                        <div class="flex flex-wrap">
+                            <div class="tag"><i class="fas fa-award mr-1"></i> 国家5A级景区</div>
+                            <div class="tag"><i class="fas fa-globe-asia mr-1"></i> 世界自然遗产</div>
+                            <div class="tag"><i class="fas fa-tree mr-1"></i> 森林覆盖率87%</div>
+                            <div class="tag"><i class="fas fa-mountain mr-1"></i> 关东第一山</div>
+                            <div class="tag"><i class="fas fa-water mr-1"></i> 三江发源地</div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl overflow-hidden shadow-lg h-80 img-container">
+                        <img src="https://s.coze.cn/image/1XCqjff67NA/" alt="长白山全景" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要景点 -->
+    <section id="attractions" class="bg-blue-50 py-20 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-800">主要景点</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto">长白山拥有众多令人叹为观止的自然景观，从神秘的天池到壮观的瀑布，每一处都值得探索。</p>
+            </div>
+
+            <!-- 景点图片轮播 -->
+            <div class="carousel mb-16" id="attractionsCarousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <img src="https://s.coze.cn/image/dsnpzPuHDHg/" alt="长白山天池"
+                            class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">长白山天池</h3>
+                            <p class="text-white/90">中国最大的火山口湖，世界海拔最高的火山湖之一</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://s.coze.cn/image/owcEX_LBqX8/" alt="长白瀑布"
+                            class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">长白瀑布</h3>
+                            <p class="text-white/90">天池唯一出水口，落差68米，东北地区最大的瀑布</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://s.coze.cn/image/fAeppfXTk8Y/" alt="温泉群" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">温泉群</h3>
+                            <p class="text-white/90">分布在长白瀑布下方约900米处，共有13处温泉眼</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://s.coze.cn/image/_xipTN2ImB8/" alt="地下森林"
+                            class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">地下森林</h3>
+                            <p class="text-white/90">又称"谷底森林"，因火山活动导致地层塌陷形成</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://s.coze.cn/image/cgR6nSpLfiI" alt="绿渊潭" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">绿渊潭</h3>
+                            <p class="text-white/90">瀑布冲击形成的深潭，夏季清澈见底，冬季冰瀑冰潭</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Uxinggu.png" alt="U型谷" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">U型谷</h3>
+                            <p class="text-white/90">是冰川留给大地的深邃诗行。</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="gaoshanhuayuan.jpg" alt="高山花园" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">高山花园</h3>
+                            <p class="text-white/90">，生长在海拔1400米至2000米的高山苔原上</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="wangchi.jpg" alt="王池" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">王池</h3>
+                            <p class="text-white/90">池不大而秀雅，水不深而清澈</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="jinjiang.jpg" alt="锦江大峡谷" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">锦江大峡谷</h3>
+                            <p class="text-white/90">约1000年前的火山千年大喷发后的地质奇观</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="yalujiang.jpeg" alt="鸭绿江大峡谷" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">鸭绿江大峡谷</h3>
+                            <p class="text-white/90">直观感受“一江跨两国”的独特地理人文景象</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="tanhuamu.jpeg" alt="炭化木遗迹" class="w-full h-[500px] object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-2xl font-bold text-white">炭化木遗迹</h3>
+                            <p class="text-white/90">全国已发现的面积最大、最集中的炭化木群</p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="carousel-indicators">
+                    <div class="carousel-indicator active" data-index="0"></div>
+                    <div class="carousel-indicator" data-index="1"></div>
+                    <div class="carousel-indicator" data-index="2"></div>
+                    <div class="carousel-indicator" data-index="3"></div>
+                    <div class="carousel-indicator" data-index="4"></div>
+                </div>
+                <div class="carousel-control prev">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="carousel-control next">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 长白山天池 -->
+                <a href="../图片及文字/天池/天池.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/dsnpzPuHDHg/" alt="长白山天池"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">长白山天池</h3>
+                            <p class="text-gray-600 mb-4">
+                                中国最大的火山口湖，世界海拔最高的火山湖之一。海拔2189.1米，湖面面积9.82平方公里，平均水深204米，最深处达373米。全年约有260天被云雾笼罩，能清晰观赏全貌的概率约30%。
+                            </p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 北景区/西景区</div>
+                                <div class="tag"><i class="fas fa-ticket-alt mr-1"></i> 倒站车80元</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="rating-text">4.8 (12,345)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 长白瀑布 -->
+                <a href="../图片及文字/长白山瀑布/长白山瀑布.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/owcEX_LBqX8/" alt="长白瀑布"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">长白瀑布</h3>
+                            <p class="text-gray-600 mb-4">
+                                天池唯一出水口，落差68米，东北地区最大的瀑布。水流经乘槎河（长1250米）后跌落，形成二道白河（松花江正源）。冬季部分结冰，形成冰瀑奇观。</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 北景区</div>
+                                <div class="tag"><i class="fas fa-water mr-1"></i> 松花江正源</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.2 (8,765)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 温泉群 -->
+                <a href="../图片及文字/聚龙温泉群/聚龙温泉群.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/fAeppfXTk8Y/" alt="温泉群"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">温泉群</h3>
+                            <p class="text-gray-600 mb-4">
+                                分布在长白瀑布下方约900米处，共有13处温泉眼。最高水温达83℃，富含硫化氢、氡等矿物质。"聚龙泉"是最著名的温泉点，冬季雪地泡温泉为特色体验。</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 北景区</div>
+                                <div class="tag"><i class="fas fa-temperature-high mr-1"></i> 最高83℃</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.9 (15,678)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 地下森林 -->
+                <a href="../图片及文字/地下森林/地下森林.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/_xipTN2ImB8/" alt="地下森林"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">地下森林</h3>
+                            <p class="text-gray-600 mb-4">
+                                又称"谷底森林"，因火山活动导致地层塌陷形成。海拔约1200米，总面积约50公顷，古树参天。林中栖息着黑熊、野猪、梅花鹿等野生动物。</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 北景区</div>
+                                <div class="tag"><i class="fas fa-tree mr-1"></i> 原始森林</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.3 (7,890)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 绿渊潭 -->
+                <a href="../图片及文字/绿渊潭/绿渊潭.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/cgR6nSpLfiI/" alt="绿渊潭"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">绿渊潭</h3>
+                            <p class="text-gray-600 mb-4">瀑布冲击形成的深潭，夏季清澈见底，冬季冰瀑冰潭。潭水碧绿，周围植被茂密，景色宜人。</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 北景区</div>
+                                <div class="tag"><i class="fas fa-water mr-1"></i> 潭水碧绿</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.5 (9,012)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 小天池 -->
+                <a href="../图片及文字/小天池/小天池.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/6mixZAkZcNA/" alt="小天池"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">小天池</h3>
+                            <p class="text-gray-600 mb-4">两个相距300米的火山口湖，《雪山飞狐》取景地。湖水清澈，周围环境幽静，是摄影爱好者的理想去处。</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 北景区</div>
+                                <div class="tag"><i class="fas fa-film mr-1"></i> 《雪山飞狐》取景地</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.1 (6,543)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!--U型谷-->
+                <a href="../图片及文字/u型谷/u型谷.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="Uxinggu.png" alt="U型谷" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">U型谷</h3>
+                            <p class="text-gray-600 mb-4">
+                                是冰川留给大地的深邃诗行。两侧陡峭的山脊如巨门敞开，谷底平坦如展开的画卷，是第四纪冰川运动时，亿万吨冰体如巨型刻刀般缓慢推进、剥蚀山岩所创造的杰作。</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 西景区</div>
+                                <div class="tag"><i class="fas fa-water mr-1"></i> 峡谷地貌</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.3 (9,633)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!--高山花园-->
+                <a href="../图片及文字/高山花园/高山花园.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="gaoshanhuayuan.jpg" alt="高山花园" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">高山花园</h3>
+                            <p class="text-gray-600 mb-4">
+                                由牛皮杜鹃、苞叶杜鹃、毛毡杜鹃、宽叶仙女木等数十种高山花卉构成，生长在海拔1400米至2000米的高山苔原上。仅在7月中旬至8月初绽放，最佳花期常不足20天</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 西景区</div>
+                                <div class="tag"><i class="fas fa-water mr-1"></i>夏季花海</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.7 (4,763)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!--王池-->
+                <a href="../图片及文字/王池/王池.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="wangchi.jpg" alt="王池" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">王池</h3>
+                            <p class="text-gray-600 mb-4">
+                                王池，是长白山“七十二龙潭”中颇具雅名的一座火山口湖，以“池不大而秀雅，水不深而清澈”而著称。它静卧于长白山西坡的锦江与林海之间</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 西景区</div>
+                                <div class="tag"><i class="fas fa-water mr-1"></i>王池笑月</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.7 (4,763)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!--锦江大峡谷-->
+                <a href="../图片及文字/锦江大峡谷/锦江大峡谷.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="jinjiang.jpg" alt="锦江大峡谷" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">锦江大峡谷</h3>
+                            <p class="text-gray-600 mb-4">
+                                锦江大峡谷是约1000年前的火山千年大喷发后，大地自我愈合时留下的、至今仍在生长的地质奇观。谷中遍布由火山岩经风化而成的冰缘岩柱和溶岩林。</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 西景区</div>
+                                <div class="tag"><i class="fas fa-water mr-1"></i>中国的科罗拉多</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.5 (6,873)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!--鸭绿江大峡谷-->
+                <a href="../图片及文字/鸭绿江大峡谷/鸭绿江大峡谷.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="yalujiang.jpeg" alt="鸭绿江大峡谷" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">鸭绿江大峡谷</h3>
+                            <p class="text-gray-600 mb-4">游览长白山南坡景区前往天池时，峡谷是核心沿途景观。此地是清晰的中朝界河景观带，可直观感受“一江跨两国”的独特地理人文景象。
+                            </p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i>长白山南麓</div>
+                                <div class="tag"><i class="fas fa-water mr-1"></i>一江跨两国</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.5 (6,873)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!--炭化木遗迹-->
+                <a href="../图片及文字/炭化木遗迹/炭化木遗迹.html" target="_blank" class="block">
+                    <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                        <div class="h-64 overflow-hidden img-container">
+                            <img src="tanhuamu.jpeg" alt="炭化木遗迹" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">炭化木遗迹</h3>
+                            <p class="text-gray-600 mb-4">
+                                炭化木是公元946年至947年间火山千年大爆发的直接产物，是全国已发现的面积最大、最集中的炭化木群。主要分布于长白山南坡，海拔约1400米处。</p>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i>西景区</div>
+                                <div class="tag"><i class="fas fa-water mr-1"></i>火山遗迹</div>
+                            </div>
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="rating">
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="rating-text">4.5 (6,873)</span>
+                                </div>
+                                <button class="favorite-btn" aria-label="收藏景点">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 四季特色 -->
+    <section id="seasons" class="container mx-auto py-20 px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-800">四季特色旅游指南</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p class="text-gray-600 max-w-3xl mx-auto">长白山四季风光各异，每个季节都有独特的魅力，带给游客不同的体验。</p>
+        </div>
+
+        <!-- 四季特色选项卡 -->
+        <div class="glassmorphism p-8 rounded-xl mb-16">
+            <div class="tabs">
+                <div class="tab active" data-tab="spring">春季</div>
+                <div class="tab" data-tab="summer">夏季</div>
+                <div class="tab" data-tab="autumn">秋季</div>
+                <div class="tab" data-tab="winter">冬季</div>
+            </div>
+
+            <div class="tab-content active" id="spring">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="img-container rounded-xl overflow-hidden h-80">
+                        <img src="https://s.coze.cn/image/md9XKRzKWr8/" alt="长白山春季" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-blue-800">春季（5-6月）</h3>
+                        <p class="text-gray-600 mb-6">春季的长白山，冰雪逐渐消融，万物复苏。高山花园开始绽放，呈现出一片生机勃勃的景象。</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>冰融奇观，6月可能出现罕见"dual-pattern"冰裂</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>高山花园开始绽放，植被复苏</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>气温逐渐回暖，适合徒步</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>游客相对较少，能更好地体验自然美景</span>
+                            </li>
+                        </ul>
+                        <div class="mt-6">
+                            <h4 class="font-semibold text-blue-700 mb-2">春季推荐活动：</h4>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-hiking mr-1"></i> 高山徒步</div>
+                                <div class="tag"><i class="fas fa-camera mr-1"></i> 摄影赏花</div>
+                                <div class="tag"><i class="fas fa-binoculars mr-1"></i> 野生动物观察</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="summer">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="img-container rounded-xl overflow-hidden h-80">
+                        <img src="https://s.coze.cn/image/klPyCfIKlKg/" alt="长白山夏季" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-blue-800">夏季（6-8月）</h3>
+                        <p class="text-gray-600 mb-6">夏季的长白山，绿意盎然，是避暑胜地。高山花园盛开，湖泊清澈，森林茂密，处处充满生机。</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>植被茂盛，高山花园盛开</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>2025年7月30日起延长开放时间</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>北景区6:30-15:00，西景区6:30-15:00</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>凉爽宜人，是避暑的理想去处</span>
+                            </li>
+                        </ul>
+                        <div class="mt-6">
+                            <h4 class="font-semibold text-blue-700 mb-2">夏季推荐活动：</h4>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-swimming-pool mr-1"></i> 天池游船</div>
+                                <div class="tag"><i class="fas fa-tree mr-1"></i> 森林探险</div>
+                                <div class="tag"><i class="fas fa-utensils mr-1"></i> 户外野餐</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="autumn">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="img-container rounded-xl overflow-hidden h-80">
+                        <img src="https://s.coze.cn/image/0xrwJWRMOQ4/" alt="长白山秋季" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-blue-800">秋季（9-10月）</h3>
+                        <p class="text-gray-600 mb-6">秋季的长白山，层林尽染，五彩斑斓。枫叶、白桦、冷杉层层晕染，构成一幅绝美的画卷。</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>森林五彩斑斓，枫叶、白桦、冷杉层层晕染</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>摄影黄金季节，游客集中涌入</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>气温适宜，秋高气爽</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>山间云雾缭绕，宛如仙境</span>
+                            </li>
+                        </ul>
+                        <div class="mt-6">
+                            <h4 class="font-semibold text-blue-700 mb-2">秋季推荐活动：</h4>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-camera-retro mr-1"></i> 秋季摄影</div>
+                                <div class="tag"><i class="fas fa-leaf mr-1"></i> 红叶观赏</div>
+                                <div class="tag"><i class="fas fa-hiking mr-1"></i> 登高望远</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="winter">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="img-container rounded-xl overflow-hidden h-80">
+                        <img src="https://s.coze.cn/image/t_BFZgFLatY/" alt="长白山冬季" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-blue-800">冬季（11-4月）</h3>
+                        <p class="text-gray-600 mb-6">冬季的长白山，银装素裹，白雪皑皑。雪覆山峦，有"东方瑞士"之称，是冰雪爱好者的天堂。</p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>雪覆山峦，有"东方瑞士"之称</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>国际天然滑雪公园，粉雪节等冰雪活动丰富</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>温泉与雪景相映成趣</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <span>可以欣赏到雾凇、冰瀑等奇观</span>
+                            </li>
+                        </ul>
+                        <div class="mt-6">
+                            <h4 class="font-semibold text-blue-700 mb-2">冬季推荐活动：</h4>
+                            <div class="flex flex-wrap">
+                                <div class="tag"><i class="fas fa-skiing mr-1"></i> 滑雪体验</div>
+                                <div class="tag"><i class="fas fa-hot-tub mr-1"></i> 雪地温泉</div>
+                                <div class="tag"><i class="fas fa-snowflake mr-1"></i> 冰雪奇缘</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 美食推荐 -->
+    <section id="food" class="bg-blue-50 py-20 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-800">美食推荐</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto">长白山地区融合了东北、朝鲜族等多种饮食文化，山珍野味和特色小吃让人回味无穷。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- 朝鲜族冷面 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                    <div class="flex flex-col">
+                        <div class="w-full h-48 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/CTLrC_HJfD8/" alt="朝鲜族冷面"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-lg font-bold text-blue-800">朝鲜族冷面</h4>
+                                <button class="favorite-btn" aria-label="收藏美食">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="rating mb-3">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-text">4.7 (1,567)</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">荞麦面为原料，搭配牛肉汤、辣白菜等</p>
+                            <p class="text-blue-600 font-medium">15-25元/碗</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 铁锅炖长白山鱼 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                    <div class="flex flex-col">
+                        <div class="w-full h-48 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/VPFYbVBnJfE/" alt="铁锅炖长白山鱼"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-lg font-bold text-blue-800">铁锅炖长白山鱼</h4>
+                                <button class="favorite-btn" aria-label="收藏美食">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="rating mb-3">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-text">4.2 (987)</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">选用冷水鱼，搭配玉米饼等</p>
+                            <p class="text-blue-600 font-medium">120-180元/份</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 打糕 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                    <div class="flex flex-col">
+                        <div class="w-full h-48 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/_36bkHfEmtM/" alt="打糕" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-lg font-bold text-blue-800">打糕</h4>
+                                <button class="favorite-btn" aria-label="收藏美食">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="rating mb-3">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-text">4.6 (1,123)</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">朝鲜族传统美食，糯米捶打而成</p>
+                            <p class="text-blue-600 font-medium">10-15元/份</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 酸菜白肉炖 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                    <div class="flex flex-col">
+                        <div class="w-full h-48 overflow-hidden img-container">
+                            <img src="https://s.coze.cn/image/qSUlV9qndpo/" alt="酸菜白肉炖"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-lg font-bold text-blue-800">酸菜白肉炖</h4>
+                                <button class="favorite-btn" aria-label="收藏美食">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="rating mb-3">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-text">4.1 (765)</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">东北特色，酸菜与五花肉炖煮</p>
+                            <p class="text-blue-600 font-medium">40-60元/份</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 血肠 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                    <div class="flex flex-col">
+                        <div class="w-full h-48 overflow-hidden img-container">
+                            <img src="xuechang.jpg" alt="血肠" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-lg font-bold text-blue-800">血肠</h4>
+                                <button class="favorite-btn" aria-label="收藏美食">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="rating mb-3">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-text">4.8 (1,456)</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">东北传统美食，猪血与糯米制成，口感独特</p>
+                            <p class="text-blue-600 font-medium">25-35元/份</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 小鸡炖蘑菇 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                    <div class="flex flex-col">
+                        <div class="w-full h-48 overflow-hidden img-container">
+                            <img src="xiaojidunmogu.jpg" alt="小鸡炖蘑菇" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-lg font-bold text-blue-800">小鸡炖蘑菇</h4>
+                                <button class="favorite-btn" aria-label="收藏美食">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="rating mb-3">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-text">4.9 (2,123)</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">东北名菜，鸡肉与榛蘑炖制，汤汁鲜美</p>
+                            <p class="text-blue-600 font-medium">60-90元/份</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 辣白菜 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                    <div class="flex flex-col">
+                        <div class="w-full h-48 overflow-hidden img-container">
+                            <img src="labaicai.jpg" alt="辣白菜" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-lg font-bold text-blue-800">辣白菜</h4>
+                                <button class="favorite-btn" aria-label="收藏美食">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="rating mb-3">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="rating-text">4.6 (1,789)</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">朝鲜族传统发酵食品，酸辣可口，开胃小菜</p>
+                            <p class="text-blue-600 font-medium">15-25元/份</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 锅包肉 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                    <div class="flex flex-col">
+                        <div class="w-full h-48 overflow-hidden img-container">
+                            <img src="guobaorou.jpg" alt="锅包肉" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-lg font-bold text-blue-800">锅包肉</h4>
+                                <button class="favorite-btn" aria-label="收藏美食">
+                                    <i class="far fa-heart text-xl"></i>
+                                </button>
+                            </div>
+                            <div class="rating mb-3">
+                                <div class="rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="rating-text">4.9 (2,456)</span>
+                            </div>
+                            <p class="text-gray-600 mb-3">东北经典菜肴，外酥里嫩，酸甜可口</p>
+                            <p class="text-blue-600 font-medium">45-65元/份</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 住宿推荐 -->
+    <section id="accommodation" class="container mx-auto py-20 px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-800">住宿推荐</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p class="text-gray-600 max-w-3xl mx-auto">长白山地区提供多种住宿选择，从高端酒店到特色民宿，满足不同游客的需求。</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- 长白山郝力克酒店 -->
+            <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                <div class="h-64 overflow-hidden img-container">
+                    <img src="https://s.coze.cn/image/_hntfH6vw7k/" alt="长白山郝力克酒店" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-bold text-blue-800">长白山郝力克酒店</h3>
+                        <button class="favorite-btn" aria-label="收藏酒店">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="rating mb-3">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-text">4.9 (1,890)</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">位于华美胜地美丽汇商业街核心，距机场85公里。200余间客房，基础面积35平方米，地暖与新风双系统。</p>
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <p class="text-blue-700 text-sm"><i class="fas fa-info-circle mr-1"></i>
+                            2025年10月推出"连住两晚可退"计划</p>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 商业街核心</div>
+                        <div class="tag"><i class="fas fa-bed mr-1"></i> 35㎡起</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 长白山原乡民俗酒店 -->
+            <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                <div class="h-64 overflow-hidden img-container">
+                    <img src="https://s.coze.cn/image/O4oq0dKDCWA/" alt="长白山原乡民俗酒店" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-bold text-blue-800">长白山原乡民俗酒店</h3>
+                        <button class="favorite-btn" aria-label="收藏酒店">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="rating mb-3">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="rating-text">4.3 (1,234)</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">东北民居"木刻楞"风格，外墙使用长白山红松原木。98间客房，全部配备火炕与独立卫浴。</p>
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <p class="text-blue-700 text-sm"><i class="fas fa-info-circle mr-1"></i>
+                            每日19点30分举办"东北大秧歌+打铁花"演出</p>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="tag"><i class="fas fa-tree mr-1"></i> 红松原木</div>
+                        <div class="tag"><i class="fas fa-fire mr-1"></i> 传统火炕</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 长白山瑞士酒店 -->
+            <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                <div class="h-64 overflow-hidden img-container">
+                    <img src="https://s.coze.cn/image/-Sy7Uvi-948/" alt="长白山瑞士酒店" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-bold text-blue-800">长白山瑞士酒店</h3>
+                        <button class="favorite-btn" aria-label="收藏酒店">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="rating mb-3">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-text">4.7 (1,567)</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">瑞士风情木屋，52间客房，最小面积40平方米。智能加湿系统，湿度默认55%。</p>
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <p class="text-blue-700 text-sm"><i class="fas fa-info-circle mr-1"></i> 自营"瑞士奶酪火锅"餐厅
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="tag"><i class="fas fa-snowflake mr-1"></i> 瑞士风情</div>
+                        <div class="tag"><i class="fas fa-tint mr-1"></i> 智能加湿</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 长白山璞悦温泉度假酒店 -->
+            <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                <div class="h-64 overflow-hidden img-container">
+                    <img src="wenquanjiudian.jpg" alt="长白山璞悦温泉度假酒店" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-bold text-blue-800">长白山璞悦温泉度假酒店</h3>
+                        <button class="favorite-btn" aria-label="收藏酒店">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="rating mb-3">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-text">4.8 (1,678)</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">位于长白山脚下，拥有天然温泉资源。120间客房，每间都配备独立温泉池，让您在欣赏美景的同时享受温泉的舒适。</p>
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <p class="text-blue-700 text-sm"><i class="fas fa-info-circle mr-1"></i>
+                            提供免费温泉体验和SPA服务</p>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="tag"><i class="fas fa-hot-tub mr-1"></i> 天然温泉</div>
+                        <div class="tag"><i class="fas fa-spa mr-1"></i> SPA服务</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 长白山讷殷古城森林部落木屋酒店 -->
+            <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                <div class="h-64 overflow-hidden img-container">
+                    <img src="senlinmuwu.jpg" alt="长白山讷殷古城森林部落木屋酒店" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-bold text-blue-800">长白山讷殷古城森林部落木屋酒店</h3>
+                        <button class="favorite-btn" aria-label="收藏酒店">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="rating mb-3">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="rating-text">4.5 (987)</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">隐藏在原始森林中的特色木屋，30间独立木屋，每间都面向森林，清晨可听到鸟鸣，夜晚可观赏星空。</p>
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <p class="text-blue-700 text-sm"><i class="fas fa-info-circle mr-1"></i>
+                            提供森林徒步和观鸟活动</p>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="tag"><i class="fas fa-tree mr-1"></i> 森林环境</div>
+                        <div class="tag"><i class="fas fa-moon mr-1"></i> 观星体验</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 长白山温泉皇冠假日酒店 -->
+            <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                <div class="h-64 overflow-hidden img-container">
+                    <img src="huangguanjiudian.jpg" alt="长白山温泉皇冠假日酒店" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-bold text-blue-800">长白山温泉皇冠假日酒店</h3>
+                        <button class="favorite-btn" aria-label="收藏酒店">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="rating mb-3">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-text">4.9 (2,156)</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">位于北坡景区，距北山门仅600米，步行可达。拥有10+个露天温泉池，是首次前往天池的游客首选。酒店设施完善，提供舒适的住宿体验。</p>
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <p class="text-blue-700 text-sm"><i class="fas fa-info-circle mr-1"></i>
+                            距北山门600米，10+露天温泉池，参考价格¥1200起</p>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="tag"><i class="fas fa-map-marker-alt mr-1"></i> 距山门600米</div>
+                        <div class="tag"><i class="fas fa-hot-tub mr-1"></i> 10+温泉池</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 长白山万达凯悦酒店 -->
+            <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                <div class="h-64 overflow-hidden img-container">
+                    <img src="kaiyuejiudian.jpg" alt="长白山万达凯悦酒店" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-bold text-blue-800">长白山万达凯悦酒店</h3>
+                        <button class="favorite-btn" aria-label="收藏酒店">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="rating mb-3">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-text">4.8 (1,923)</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">位于西坡景区万达滑雪圈，滑雪爱好者的天堂。酒店直通滑雪场和缆车，设有儿童俱乐部和恒温泳池，是亲子游的理想选择。</p>
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <p class="text-blue-700 text-sm"><i class="fas fa-info-circle mr-1"></i>
+                            亲子酒店，儿童俱乐部+恒温泳池，参考价格¥1800起</p>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="tag"><i class="fas fa-skiing mr-1"></i> 直通雪场</div>
+                        <div class="tag"><i class="fas fa-child mr-1"></i> 亲子友好</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 长白山柏悦酒店 -->
+            <div class="glassmorphism rounded-xl overflow-hidden card-hover">
+                <div class="h-64 overflow-hidden img-container">
+                    <img src="baiyuejiudian.png" alt="长白山柏悦酒店" class="w-full h-full object-cover">
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xl font-bold text-blue-800">长白山柏悦酒店</h3>
+                        <button class="favorite-btn" aria-label="收藏酒店">
+                            <i class="far fa-heart text-xl"></i>
+                        </button>
+                    </div>
+                    <div class="rating mb-3">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-text">5.0 (856)</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">西坡景区顶级奢华酒店，独享私人雪道，提供滑雪至门口的便捷通道。拥有室内温水游泳池和室外热矿泉泳池，为高端旅客提供极致体验。</p>
+                    <div class="bg-blue-50 p-3 rounded-lg mb-4">
+                        <p class="text-blue-700 text-sm"><i class="fas fa-info-circle mr-1"></i>
+                            顶奢酒店，独享私人雪道，参考价格¥2500起</p>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <div class="tag"><i class="fas fa-crown mr-1"></i> 顶级奢华</div>
+                        <div class="tag"><i class="fas fa-skiing-nordic mr-1"></i> 私人雪道</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 交通指南 -->
+    <section id="transportation" class="container mx-auto py-20 px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-800">交通指南</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p class="text-gray-600 max-w-3xl mx-auto">长白山交通便利，可通过飞机、火车、汽车等多种方式到达，景区内交通也十分便捷。</p>
+        </div>
+
+        <div class="glassmorphism p-8 rounded-xl max-w-6xl mx-auto mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-blue-800">外部交通</h3>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold mb-3 text-blue-700 flex items-center">
+                            <i class="fas fa-plane text-blue-600 mr-2"> 飞机</i>
+                        </h4>
+                        <p class="text-gray-600 mb-3">长白山机场位于白山市抚松县松江河镇，距离长白山景区约85公里。目前开通了至北京、上海、广州、沈阳、长春等城市的航线。
+                        </p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700 font-medium mb-2">机场交通：</p>
+                            <ul class="text-gray-600 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>机场大巴：直达长白山北景区、西景区，票价约30-50元</span>
+                                </li>
+
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>出租车：到北景区约200元，到西景区约150元</span>
+                                </li>
+
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>酒店接驳：部分高端酒店提供付费接机服务</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold mb-3 text-blue-700 flex items-center"></h4>
+                        <i class="fas fa-train text-blue-600 mr-2"> 火车</i>
+
+                        <p class="text-gray-600 mb-3">长白山地区有多个火车站，主要有长白山站、松江河站、安图站等。其中长白山站是新建的高铁站，位于池北区，距离北景区较近。
+                        </p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700 font-medium mb-2">雪国专列：</p>
+                            <ul class="text-gray-600 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>首发时间：2024年12月26日14:18</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>始发站：长白山站，终点站：松江河站</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>发车频次：每周二、三、五、六、日发车</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>全程时长：95分钟</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3 text-blue-700 flex items-center">
+                            <i class="fas fa-car text-blue-600 mr-2"> 汽车</i>
+                        </h4>
+                        <p class="text-gray-600 mb-3">长白山地区公路交通发达，可通过国道、省道等到达景区。主要公路有G201、G202、G302、G331等。</p>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <p class="text-gray-700 font-medium mb-2">主要公路：</p>
+                            <ul class="text-gray-600 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>G331公路：连接长白山火车站、机场、高速、北景区和南景区</span>
+                                </li>
+
+                                <li class="flex items-start">
+                                    <i class="fas fa-arrow-right text-blue-600 mr-2 mt-1"></i>
+                                    <span>长白山旅游公路：连接北景区和西景区，路况良好</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-blue-800">景区交通</h3>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold mb-3 text-blue-700 flex items-center">
+                            <i class="fas fa-ticket-alt text-blue-600 mr-2"> 门票信息</i>
+                        </h4>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                                <thead class="bg-blue-600 text-white">
+                                    <tr>
+                                        <th class="py-3 px-4 text-left">景区</th>
+                                        <th class="py-3 px-4 text-left">门票价格</th>
+                                        <th class="py-3 px-4 text-left">大巴车票</th>
+                                        <th class="py-3 px-4 text-left">倒站车票</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="py-3 px-4 font-medium">北景区</td>
+                                        <td class="py-3 px-4">105元</td>
+                                        <td class="py-3 px-4">85元</td>
+                                        <td class="py-3 px-4">80元（现场购买）</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-medium">西景区</td>
+                                        <td class="py-3 px-4">105元</td>
+                                        <td class="py-3 px-4">85元</td>
+                                        <td class="py-3 px-4">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-medium">南景区</td>
+                                        <td class="py-3 px-4">105元</td>
+                                        <td class="py-3 px-4">85元</td>
+                                        <td class="py-3 px-4">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-gray-600 text-sm mt-3">注：门票需提前通过官方公众号"长白山"预约，可享受优惠政策，请查看长白山北、西景区价格公示。
+                        </p>
+                    </div>
+
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold mb-3 text-blue-700 flex items-center">
+                            <i class="fas fa-clock text-blue-600 mr-2"> 开放时间</i>
+                        </h4>
+
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h5 class="font-medium text-gray-700 mb-2">北景区：</h5>
+                                <p class="text-gray-600">4月1日-11月30日，6:30-16:30（旺季可能延长至17:00）</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h5 class="font-medium text-gray-700 mb-2">西景区：</h5>
+                                <p class="text-gray-600">6月1日-9月30日，7:00-15:30</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h5 class="font-medium text-gray-700 mb-2">南景区：</h5>
+                                <p class="text-gray-600">6月15日-9月30日，8:00-14:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-lg font-semibold mb-3 text-blue-700 flex items-center">
+                            <i class="fas fa-bus text-blue-600 mr-2"> 内部交通</i>
+                        </h4>
+                        <ul class="text-gray-600 space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                <span>景区内必须乘坐统一大巴车，各景点间循环发车</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                <span>天池倒站车需在北景区换乘中心现场购买，一车只能乘坐5-6人</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                <span>各站点间观光车平均间隔15分钟，最后一班返程车于闭园后30分钟发出</span>
+                            </li>
+
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                <span>景区内禁止私家车进入，需停放在景区外停车场</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- 文化活动 -->
+    <section id="activities" class="container mx-auto py-20 px-4">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-800">文化活动</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+            <p class="text-gray-600 max-w-3xl mx-auto">长白山不仅有壮丽的自然风光，还有丰富多彩的文化活动和节庆活动，展现当地深厚的文化底蕴和民俗风情，让游客体验独特的文化魅力。</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- 活动日历 -->
+            <div class="glassmorphism p-6 rounded-xl mb-16">
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <button class="calendar-nav" id="prevMonth" aria-label="上一个月">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+
+                        <h3 class="text-xl font-semibold" id="currentMonth">2025年12月</h3>
+                        <button class="calendar-nav" id="nextMonth" aria-label="下一个月">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                    <!-- 日历格子将通过JavaScript动态生成 -->
+
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 ">
+                <!-- 第六届长白山粉雪节 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover h-full flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="w-full h-64 overflow-hidden img-container">
+                            <img src="fenxuejie.jpg" alt="第六届长白山粉雪节" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">第六届长白山粉雪节</h3>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>2024年12月26日启幕</span>
+                            </div>
+
+                            <p class="text-gray-600 mb-4">长白山粉雪节是冬季最盛大的活动，六大精彩活动个个独具特色，让游客体验冰雪魅力。</p>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-snowflake text-blue-600 mr-2 mt-1"></i>
+                                    <span
+                                        class="text-gray-700"><strong>美人松爱情森林盟誓活动：在静谧的美人松爱情森林中，情侣们许下一生的盟誓</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-snowflake text-blue-600 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>泼雪嘉年华：雪绒花雪乐园盛大开园，各种趣味雪上项目</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-snowflake text-blue-600 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>雪国专列首发：开启奇幻冰雪旅程，沿途欣赏北国风光</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-snowflake text-blue-600 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>冰雪美食节：云顶市集开市，品尝热气腾腾的当地美食</strong></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- 817稻米节 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover h-full flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="w-full h-64 overflow-hidden img-container">
+                            <img src="daomijie.jpg" alt="817稻米节" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">817稻米节</h3>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>每年8月15日-17日</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                817稻米节不仅是一个庆祝丰收的节日，更是一个集文化、艺术、娱乐于一体的盛会。每年吸引着成千上万的游客，尤其是热爱自然与美食的人们。</p>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>文创打卡之旅：沿着指定路线探索长白山的魅力，参与拍肩礼互换活动</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>稻米集市：品尝丰富多彩的稻米美食和文化展览</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>南派三叔见面会：与著名作家南派三叔亲密接触，聆听创作故事</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>烟火表演与音乐会：绚丽烟花点亮夜空，知名歌手献上音乐盛宴</strong></span>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 安图县市民文化节、农民文化节 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover h-full flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="w-full h-64 overflow-hidden img-container">
+                            <img src="antuwenhuajie.jpg" alt="安图县市民文化节、农民文化节" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">安图县市民文化节、农民文化节</h3>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>每年7月-8月</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">安图县市民文化节和农民文化节是夏季的文化盛会，展现当地的文化艺术和民俗风情，让游客感受浓郁的地方特色。
+                            </p>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>开幕式演出：本土艺术家带来精彩表演，点燃文化节的第一簇星火</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>少儿专场：孩子们展示艺术才华，舞蹈、歌声、演奏等节目精彩纷呈</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>广场舞展演：各街道精英舞队轮番登场，展现健康活力</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>摇滚专场与音乐家协会专场：满足不同音乐爱好者的需求</strong></span>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 长白山国际冰雪文化节 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover h-full flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="w-full h-64 overflow-hidden img-container">
+                            <img src="bingxuewenhuajie.jpg" alt="长白山国际冰雪文化节" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">长白山国际冰雪文化节</h3>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>每年12月至次年3月</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">长白山国际冰雪文化节是冬季最重要的文化盛事，融合冰雪艺术、民俗表演、美食体验于一体，展现东北独特的冰雪文化魅力。</p>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>冰雕雪雕艺术展：国内外艺术家创作的巨型冰雕雪雕作品</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>民俗文化表演：东北二人转、大秧歌、打铁花等传统艺术</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>冰雪运动体验：滑雪、滑冰、雪地摩托等丰富活动</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>冰雪美食节：品尝热气腾腾的东北特色美食</strong></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 长白山朝鲜族民俗文化节 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover h-full flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="w-full h-64 overflow-hidden img-container">
+                            <img src="chaoxianzuminsujie.jpg" alt="长白山朝鲜族民俗文化节" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">长白山朝鲜族民俗文化节</h3>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>每年8月15日-17日</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">长白山地区是朝鲜族聚居地，文化节展示朝鲜族独特的民族风情、传统服饰、歌舞表演和美食文化，让游客深入了解朝鲜族文化。</p>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>传统服饰展示：精美的朝鲜族传统服装和配饰展示</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>民族歌舞表演：长鼓舞、扇子舞、象帽舞等传统舞蹈</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>传统美食体验：打糕、冷面、泡菜等朝鲜族特色美食</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>民俗体验活动：学习制作传统手工艺品和美食</strong></span>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 长白山人参文化节 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover h-full flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="w-full h-64 overflow-hidden img-container">
+                            <img src="renshenwenhuajie.jpg" alt="长白山人参文化节" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">长白山人参文化节</h3>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>每年9月</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">长白山是优质人参的产地，人参文化节展示人参的种植、加工、药用价值和文化内涵，是了解长白山特产文化的重要窗口。</p>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>人参展览：展示各种规格和品质的人参产品</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>人参文化讲座：了解人参的历史、功效和文化意义</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>人参美食节：品尝人参炖鸡、人参酒等特色美食</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>人参采摘体验：参观人参种植基地，体验采摘过程</strong></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 长白山森林音乐节 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover h-full flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="w-full h-64 overflow-hidden img-container">
+                            <img src="senlinyinyuejie.jpg" alt="长白山森林音乐节" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">长白山森林音乐节</h3>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>每年7月-8月</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">在原始森林中举办的音乐节，融合自然与音乐，邀请国内外知名音乐人，为游客带来独特的音乐体验和自然享受。</p>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>户外音乐会：在森林中搭建舞台，享受自然音乐</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>民谣专场：国内外民谣歌手带来精彩演出</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>森林露营体验：在音乐节期间体验森林露营</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>音乐市集：手工艺品、美食、音乐周边产品</strong></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 满族颁金节 -->
+                <div class="glassmorphism rounded-xl overflow-hidden card-hover h-full flex flex-col">
+                    <div class="flex-1 flex flex-col">
+                        <div class="w-full h-64 overflow-hidden img-container">
+                            <img src="manzubanjinjie.jpg" alt="满族颁金节" class="w-full h-full object-cover">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-3 text-blue-800">满族颁金节</h3>
+                            <div class="flex items-center text-gray-600 mb-4">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>每年10月13日</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">颁金节是满族的传统节日，"颁金"在满语中意为"诞生"，是纪念满族命名的重要节日。节日期间展示满族传统文化、服饰、歌舞和美食。
+                            </p>
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>满族传统服饰展示：精美的满族旗袍、旗装等传统服装</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>满族歌舞表演：传统满族舞蹈和音乐演出</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>满族美食体验：萨其马、白肉血肠、满族火锅等特色美食</strong></span>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-gray-700"><strong>满族文化展览：展示满族历史、文化和传统手工艺品</strong></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 旅游注意事项 -->
+    <section id="tips" class="bg-blue-50 py-20 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-800">旅游注意事项</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-3xl mx-auto">为了让您的长白山之旅更加顺利和愉快，请留意以下注意事项。</p>
+            </div>
+
+            <div class="glassmorphism p-8 rounded-xl max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 text-blue-800 flex items-center">
+                            <i class="fas fa-exclamation-circle text-blue-600 mr-2"> 行前准备</i>
+                        </h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-medium text-gray-800">穿着建议</span>
+                                    <p class="text-gray-600">
+                                        东北气候干燥四季分明，夏季炎热、干燥，需要随身携带太阳伞、太阳帽、太阳镜、水性的护肤系列。冬季寒冷，需穿羽绒服、雪地靴、手套、围巾等保暖衣物。
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-medium text-gray-800">必备物品</span>
+                                    <p class="text-gray-600">
+                                        身份证等有效证件、常用药品（感冒药、肠胃药等）、充电宝、相机、舒适的鞋子。登山应穿布底鞋或橡胶底鞋，忌穿皮鞋、塑料底鞋和拖鞋。</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-medium text-gray-800">健康准备</span>
+                                    <p class="text-gray-600">长白山海拔较高，部分人可能会有高原反应，建议提前做好准备。气候干燥，注意多喝水，多吃水果。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 text-blue-800 flex items-center">
+                            <i class="fas fa-exclamation-triangle text-blue-600 mr-2"> 安全与环保</i>
+                        </h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-medium text-gray-800">人身安全</span>
+                                    <p class="text-gray-600">
+                                        长白山距延吉市240公里，坐车时间相对比较长，路途比较辛苦，安全摆放行李架上的物品，随车上下带好随身携带的贵重物品以免丢失。游览期间请记清团号和车牌号，以免上错车。
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-medium text-gray-800">财产安全</span>
+                                    <p class="text-gray-600">每次离开酒店时，请详细检查您的身份证等随身证件和贵重物品，如有遗失请于第一次时间报告导游或酒店前台。
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-medium text-gray-800">环境保护
+                                        <p class="text-gray-600">
+                                            长白山是自然保护区，不要采摘里面的花草树木，注意保护景区的环境。禁止在山区吸烟，点火等危险活动。
+                                        </p>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8 pt-8 border-t border-gray-200">
+                    <h3 class="text-xl font-bold mb-6 text-blue-800 flex items-center">
+                        <i class="fas fa-info-circle text-blue-600 mr-2"> 其他注意事项</i>
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-medium text-gray-800 mb-2">乘坐倒站车</h4>
+                            <p class="text-gray-600 text-sm">
+                                到长白山山门后要搭乘当地倒站车（吉普车），请听从导游安排，一车只能乘坐5-6人，到达天池后，请记好车牌号及时间。</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-medium text-gray-800 mb-2">饮食安全</h4>
+                            <p class="text-gray-600 text-sm">夜宵多为路边烧烤，卫生情况很难保证，请注意选择食用。品尝当地特色美食时，建议选择正规餐厅。
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h4 class="font-medium text-gray-800 mb-2">团队旅游</h4>
+                            <p class="text-gray-600 text-sm">
+                                游客应配合导游和领队的工作，注意人身及财产的安全。由于旅游景点游客众多，各项旅游安全第一，请各位贵宾一定要服从导游的安排和指挥，互相照顾。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-blue-900 text-white py-12 px-4">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-mountain text-blue-400 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold">长白山文旅</span>
+                    </div>
+                    <p class="text-blue-300 mb-4">探索关东第一山的自然与文化之美，体验四季迥异的长白山风光。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-blue-300 hover:text-white transition-colors duration-300"
+                            aria-label="微信">
+                            <i class="fab fa-weixin text-xl"></i></a>
+                        <a href="#" class="text-blue-300 hover:text-white transition-colors duration-300"
+                            aria-label="微博">
+                            <i class="fab fa-weibo text-xl"></i></a>
+                        <a href="#" class="text-blue-300 hover:text-white transition-colors duration-300"
+                            aria-label="抖音">
+                            <i class="fab fa-tiktok text-xl"></i>
+                        </a>
+                        <a href="#" class="text-blue-300 hover:text-white transition-colors duration-300"
+                            aria-label="小红书">
+                            <i class="fab fa-redhat text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#overview"
+                                class="text-blue-300 hover:text-white transition-colors duration-300">景区概况</a>
+                        </li>
+                        <li><a href="#attractions"
+                                class="text-blue-300 hover:text-white transition-colors duration-300">主要景点</a>
+                        </li>
+                        <li><a href="#seasons"
+                                class="text-blue-300 hover:text-white transition-colors duration-300">四季特色</a>
+                        </li>
+                        <li><a href="#food"
+                                class="text-blue-300 hover:text-white transition-colors duration-300">美食推荐</a>
+                        </li>
+                        <li><a href="#accommodation"
+                                class="text-blue-300 hover:text-white transition-colors duration-300">住宿推荐</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">实用信息</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#transportation"
+                                class="text-blue-300 hover:text-white transition-colors duration-300">交通指南</a>
+                        </li>
+                        <li><a href="#activities"
+                                class="text-blue-300 hover:text-white transition-colors duration-300">文化活动</a>
+                        </li>
+                        <li><a href="#tips"
+                                class="text-blue-300 hover:text-white transition-colors duration-300">旅游注意事项</a>
+                        </li>
+                        <li><a href="#" class="text-blue-300 hover:text-white transition-colors duration-300">常见问题</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-blue-400 mr-3 mt-1"></i>
+                            <span class="text-blue-300">吉林省延边朝鲜族自治州安图县</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-blue-400 mr-3"></i>
+                            <span class="text-blue-300">13311815678</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-blue-400 mr-3"></i>
+                            <span class="text-blue-300">sisai181746@qq.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-project-diagram text-blue-400 mr-3 mt-1"></i>
+                            <a href="满邮好戏.pdf"
+                                class="text-blue-300 hover:text-blue-200 hover:underline transition-colors duration-200"
+                                target="_blank">
+                                文旅项目——满邮好戏
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-blue-800 pt-8 text-center text-blue-400 text-sm">
+            <p>© 2025 长白山文旅官方网站. 保留所有权利.</p>
+            <p class="mt-2">景区官网: <a href="http://www.ichangbaishan.com"
+                    class="hover:text-white transition-colors duration-300">www.ichangbaishan.com</a></p>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop" aria-label="返回顶部">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // 导航栏滚动效果
+        const mainNav = document.getElementById('mainNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                mainNav.classList.add('nav-scrolled');
+            } else {
+                mainNav.classList.remove('nav-scrolled');
+            }
+        });
+
+        // 移动端菜单
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMenuButton = document.getElementById('closeMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeMenu() {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeMenuButton.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // 轮播图功能
+        const carousel = document.getElementById('attractionsCarousel');
+        const carouselInner = carousel.querySelector('.carousel-inner');
+        const carouselItems = carousel.querySelectorAll('.carousel-item');
+        const indicators = carousel.querySelectorAll('.carousel-indicator');
+        const prevButton = carousel.querySelector('.carousel-control.prev');
+        const nextButton = carousel.querySelector('.carousel-control.next');
+        let currentIndex = 0;
+        let slideInterval;
+
+        function updateCarousel() {
+            carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            // 更新指示器
+            indicators.forEach((indicator, index) => {
+                if (index === currentIndex) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            });
+        }
+
+        function startSlideInterval() {
+            slideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % carouselItems.length;
+                updateCarousel();
+            }, 5000);
+        }
+
+        prevButton.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
+            updateCarousel();
+            startSlideInterval();
+        });
+
+        nextButton.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            currentIndex = (currentIndex + 1) % carouselItems.length;
+            updateCarousel();
+            startSlideInterval();
+        });
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                currentIndex = index;
+                updateCarousel();
+                startSlideInterval();
+            });
+        });
+
+        // 初始化轮播
+        startSlideInterval();
+
+        // 选项卡功能
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // 移除所有选项卡的active类
+                tabs.forEach(t => t.classList.remove('active'));
+                // 给当前选项卡添加active类
+                tab.classList.add('active');
+
+                // 隐藏所有内容
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // 显示对应内容
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // 收藏按钮功能
+        const favoriteButtons = document.querySelectorAll('.favorite-btn');
+        favoriteButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const icon = button.querySelector('i');
+                if (button.classList.contains('active')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                }
+            });
+        });
+
+        // 返回顶部按钮
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navHeight = mainNav.offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+
+                    // 更新导航链接active状态
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // 日历功能
+        const currentMonthElement = document.getElementById('currentMonth');
+        const calendarGrid = document.getElementById('calendarGrid');
+        const prevMonthButton = document.getElementById('prevMonth');
+        const nextMonthButton = document.getElementById('nextMonth');
+        let currentDate = new Date();
+
+        // 设置当前月份显示
+        function updateCalendarHeader() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth() + 1;
+            currentMonthElement.textContent = `${year}年${month}月`;
+        }
+
+        // 生成日历格子
+        function generateCalendar() {
+            calendarGrid.innerHTML = '';
+
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+
+            // 获取当月第一天是星期几
+            const firstDay = new Date(year, month, 1).getDay();
+            // 获取当月天数
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // 添加星期标题
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            weekdays.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day', 'font-medium', 'bg-blue-50', 'text-blue-800');
+                dayElement.textContent = day;
+                calendarGrid.appendChild(dayElement);
+            });
+
+            // 添加上个月的最后几天
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            for (let i = 0; i < firstDay; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day', 'other-month');
+                dayElement.textContent = prevMonthDays - firstDay + i + 1;
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // 添加当月的天数
+            const today = new Date();
+            const isCurrentMonth = today.getFullYear() === year && today.getMonth() === month;
+
+            // 定义有活动的日期
+            const eventDates = [6, 15, 16, 17, 26]; // 示例日期
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.classList.add('calendar-day');
+
+                if (isCurrentMonth && today.getDate() === i) {
+                    dayElement.classList.add('today');
+                }
+
+                if (eventDates.includes(i)) {
+                    dayElement.classList.add('event');
+                }
+
+                dayElement.textContent = i;
+
+                // 添加点击事件
+                dayElement.addEventListener('click', () => {
+                    alert(`${year}年${month + 1}月${i}日`);
+                });
+
+                calendarGrid.appendChild(dayElement);
+            }
+
+            // 添加下个月的前几天
+            const totalDays = firstDay + daysInMonth;
+            const nextMonthDays = 7 - (totalDays % 7);
+            if (nextMonthDays < 7) {
+                for (let i = 1; i <= nextMonthDays; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.classList.add('calendar-day', 'other-month');
+                    dayElement.textContent = i;
+                    calendarGrid.appendChild(dayElement);
+                }
+            }
+        }
+
+        // 初始化日历
+        updateCalendarHeader();
+        generateCalendar();
+
+        // 切换月份
+        prevMonthButton.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateCalendarHeader();
+            generateCalendar();
+        });
+
+        nextMonthButton.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateCalendarHeader();
+            generateCalendar();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatBtn = document.getElementById('ai-chat-btn');
+            const chatWindow = document.getElementById('ai-chat-window');
+            const closeBtn = document.getElementById('close-chat');
+
+            // 切换聊天窗口显示/隐藏
+            chatBtn.addEventListener('click', function () {
+                chatWindow.classList.toggle('hidden');
+            });
+
+            closeBtn.addEventListener('click', function () {
+                chatWindow.classList.add('hidden');
+            });
+
+            // 点击外部关闭
+            document.addEventListener('click', function (event) {
+                if (!chatWindow.contains(event.target) &&
+                    !chatBtn.contains(event.target) &&
+                    !chatWindow.classList.contains('hidden')) {
+                    chatWindow.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
